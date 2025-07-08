@@ -1,0 +1,3 @@
+datasets
+pandas
+# !pip install -U datasets huggingface_hub fsspec

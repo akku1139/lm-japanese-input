@@ -1,0 +1,44 @@
+name: Train sentencepiece model
+
+on:
+  workflow_dispatch:
+    inputs:
+      tmate:
+        type: boolean
+        description: 'SSH debug'
+        required: false
+        default: false
+
+permissions:
+  packages: write
+  contents: write
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mxschmitt/action-tmate@v3
+        if: ${{ inputs.tmate }}
+        with:
+          detached: true
+
+      - run: |
+          mount
+          df -h
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - run: |
+          pip install -r requirements.txt
+          python train_spm.py
+
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create spm-$(date +%Y-%m-%d-%H-%M-%S) "./*"
