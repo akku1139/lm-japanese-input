@@ -24,7 +24,7 @@ dataset.map(
   batched=True,
   batch_size=batch_size,
   # num_proc=os.cpu_count() or 1,
-  load_from_cache_file=False,
+  # load_from_cache_file=False,
 )
 
 print("Done")
