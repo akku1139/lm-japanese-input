@@ -2,7 +2,7 @@
 
 import sentencepiece as spm
 from datasets import load_dataset
-import os
+# import os
 
 kana_dataset_file = "kana_for_tokenizer_training.txt"
 kanji_dataset_file = "kanji_for_tokenizer_training.txt"
@@ -23,7 +23,7 @@ dataset.map(
   write_batch_to_file,
   batched=True,
   batch_size=batch_size,
-  num_proc=os.cpu_count() or 1,
+  # num_proc=os.cpu_count() or 1,
   load_from_cache_file=False,
 )
 
