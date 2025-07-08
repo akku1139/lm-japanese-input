@@ -38,7 +38,7 @@ jobs:
       - run: |
           pip install -r requirements.txt
           wd=$(pwd)
-          cd mnt
+          cd /mnt
           python $(wd)/train_spm.py
 
       - env:
