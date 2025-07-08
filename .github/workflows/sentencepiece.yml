@@ -27,7 +27,7 @@ jobs:
           # mount
           df -h
           sudo mkdir /mnt/train
-          sudo chown runner:runner
+          sudo chown runner:runner -R /mnt/train
 
       - uses: actions/checkout@v4
 
