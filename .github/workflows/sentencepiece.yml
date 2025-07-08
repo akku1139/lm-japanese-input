@@ -37,9 +37,8 @@ jobs:
 
       - run: |
           pip install -r requirements.txt
-          wd=$(pwd)
           cd /mnt
-          python $(wd)/train_spm.py
+          python ${{ github.workspace }}/train_spm.py
 
       - env:
           GH_TOKEN: ${{ github.token }}
