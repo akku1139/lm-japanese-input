@@ -23,7 +23,7 @@ jobs:
           detached: true
 
       - run: |
-          mount
+          # mount
           df -h
 
       - uses: actions/checkout@v4
@@ -35,8 +35,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
+      - run: pip install -r requirements.txt
       - run: |
-          pip install -r requirements.txt
           cd /mnt
           python ${{ github.workspace }}/train_spm.py
 
