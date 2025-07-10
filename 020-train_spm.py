@@ -1,41 +1,22 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+from define import kana_dataset_file, kanji_dataset_file
 import sentencepiece as spm
-from datasets import load_dataset
-# import os
-
-kana_dataset_file = "kana_for_tokenizer_training.txt"
-kanji_dataset_file = "kanji_for_tokenizer_training.txt"
-
-print("Downloading dataset (streaming)")
-dataset = load_dataset("Miwa-Keita/zenz-v2.5-dataset", split="train", streaming=True)
-print(dataset)
-
-print("Writing dataset")
-batch_size = 2000
-
-with open(kana_dataset_file, "w", encoding="utf-8") as f_kana:
-  with open(kanji_dataset_file, "w", encoding="utf-8") as f_kanji:
-    for example in dataset:
-      f_kana.write(example.get("input") + "\n")
-      f_kanji.write(example.get("output") + "\n")
-
-print("Done")
 
 spm.SentencePieceTrainer.train(
   input=kana_dataset_file,
   model_prefix="kana_tokenizer",
   vocab_size=8000,
-  model_type="bpe",
-  character_coverage=1.0
+  model_type="unigram",
+  character_coverage=0.9995,
 )
 
 spm.SentencePieceTrainer.train(
   input=kanji_dataset_file,
   model_prefix="kanji_tokenizer",
-  vocab_size=16000,
-  model_type="bpe",
-  character_coverage=1.0
+  vocab_size=10000,
+  model_type="unigram",
+  character_coverage=0.9995,
 )
 
 kana_tokenizer = PreTrainedTokenizerFast(
