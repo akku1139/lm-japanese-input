@@ -1,3 +1,13 @@
 datasets
-sentencepiece
+
+#sentencepiece
+git+https://github.com/google/sentencepiece.git@0bc2f38a7069bd948001eb52eff3d51a4a132278#egg=sentencepiece&subdirectory=python
+
+transformers
+# for Fast Tokenizer (legacy=False)
+protobuf
+
 # !pip install -U datasets huggingface_hub fsspec
+
+--index-url https://download.pytorch.org/whl/nightly/rocm6.4
+torch
